@@ -38,15 +38,19 @@
 
 (defun coq/init-proof-general ()
   "Initialize Proof General"
-  (use-package proof-site
-    :defer t
-    :mode ("\\.v\\'" . coq-mode)
-    :load-path
-    "/usr/local/Cellar/proof-general/4.2/share/emacs/site-lisp/proof-general/generic")
-  :config (progn
-            (spacemacs/set-leader-keys-for-major-mode 'coq-mode
-              "]" 'proof-assert-next-command-interactive
-              "[" 'proof-undo-last-successful-command
-              "." 'proof-goto-point
-              ))
+  (let ((lePath (executable-find "proofgeneral")))
+    (use-package proof-site
+      :defer t
+      :mode ("\\.v\\'" . coq-mode)
+      :load-path "/home/slee2/.nix-profile/bin/proofgeneral"
+
+      :config (progn
+                (spacemacs/set-leader-keys-for-major-mode 'coq-mode
+                  "]" 'proof-assert-next-command-interactive
+                  "[" 'proof-undo-last-successful-command
+                  "." 'proof-goto-point
+                  ))
+      )
+    )
+
   )
